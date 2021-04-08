@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari</title>
+</head>
+<body>
+<form action="/myServlet" method="post">
+    <label> Com et dius? <br/><input type="text" required name="nom" value="Montse"/> </label><br/>
+    <label> DNI (Sin la letra)? <br/> <input type="number" required name="dni" value="111111111" pattern="{9,9}"/></label><br/>
+    <label> ISBN (Sin numero de control)? <br/> <input type="number" required name="isbn" value="1212121212121" pattern="{13,13}"/></label><br/><br/>
+    <input type="submit"/>
+</form>
+</body>
+</html>
