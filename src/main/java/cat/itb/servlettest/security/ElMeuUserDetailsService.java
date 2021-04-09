@@ -16,21 +16,21 @@ public class ElMeuUserDetailsService implements UserDetailsService
     public static final String ADMIN_ROLE = "ADMIN";
     public static final String USER_ROLE = "USER";
 
-   @Autowired
-   private UserService serveiUsuaris;
+    @Autowired
+    private UserService serveiUsuaris;
 
-   @Override
-   public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
-   {
-       ForumUser u= serveiUsuaris.consultaPerId(Integer.parseInt(s));
-       User.UserBuilder builder;
-       if(u!=null){
-           builder=User.withUsername(s);
-           builder.disabled(false);
-           builder.password(u.getPassword());
-           builder.authorities(new SimpleGrantedAuthority(USER_ROLE));
-       }
-       else throw new UsernameNotFoundException("Usuari no trobat");
-       return builder.build();
-   }
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
+    {
+        ForumUser u = serveiUsuaris.consultaPerId(Integer.parseInt(s));
+        User.UserBuilder builder;
+        if (u != null)
+        {
+            builder = User.withUsername(s);
+            builder.disabled(false);
+            builder.password(u.getPassword());
+            builder.authorities(new SimpleGrantedAuthority(USER_ROLE));
+        } else throw new UsernameNotFoundException("Usuari no trobat");
+        return builder.build();
+    }
 }

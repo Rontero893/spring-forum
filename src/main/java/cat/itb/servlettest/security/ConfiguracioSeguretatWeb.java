@@ -13,29 +13,28 @@ public class ConfiguracioSeguretatWeb extends WebSecurityConfigurerAdapter
     @Autowired
     private ElMeuUserDetailsService userDetailsService;
 
-
-    public BCryptPasswordEncoder passwordEncoder()
-    {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/inici").permitAll()
-                .anyRequest().authenticated()
+    protected void configure(HttpSecurity http) throws Exception
+    {
+        http.authorizeRequests()
+                .antMatchers("/", "/inici", "/hola")
+                .permitAll()
+
+                .antMatchers("/secret").authenticated()
+
+                .antMatchers("/topsecret").hasRole("espia")
+
                 .and()
                 .formLogin()
-                .loginPage("/login")
                 .permitAll()
+
                 .and()
                 .logout()
                 .permitAll();
