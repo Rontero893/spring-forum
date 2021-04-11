@@ -1,4 +1,4 @@
-package cat.itb.servlettest.utilities;
+package cat.itb.springforum.utilities;
 
 import java.util.Random;
 

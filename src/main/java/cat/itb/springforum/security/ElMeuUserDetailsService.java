@@ -1,8 +1,7 @@
-package cat.itb.servlettest.security;
+package cat.itb.springforum.security;
 
-import cat.itb.servlettest.model.entities.UserTest;
-import cat.itb.servlettest.model.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cat.itb.springforum.model.entities.UserForum;
+import cat.itb.springforum.model.services.UserForumService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,24 +12,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class ElMeuUserDetailsService implements UserDetailsService
 {
-    public static final String ADMIN_ROLE = "ADMIN";
-    public static final String USER_ROLE = "USER";
+    private final UserForumService userForumService;
 
-    @Autowired
-    private UserService serveiUsuaris;
+    public ElMeuUserDetailsService(UserForumService userForumService) { this.userForumService = userForumService; }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
     {
-        UserTest u = serveiUsuaris.consultaPerId(Integer.parseInt(s));
+        UserForum u = userForumService.getUser(s);
         User.UserBuilder builder;
         if (u != null)
         {
             builder = User.withUsername(s);
             builder.disabled(false);
             builder.password(u.getPassword());
-            builder.authorities(new SimpleGrantedAuthority(USER_ROLE));
-        } else throw new UsernameNotFoundException("Usuari no trobat");
+            builder.authorities(new SimpleGrantedAuthority(u.getRole()));
+        }
+        else throw new UsernameNotFoundException("User not found!");
+
         return builder.build();
     }
 }

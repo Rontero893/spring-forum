@@ -1,4 +1,4 @@
-package cat.itb.servlettest.model.entities;
+package cat.itb.springforum.model.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package cat.itb.servlettest;
+package cat.itb.springforum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

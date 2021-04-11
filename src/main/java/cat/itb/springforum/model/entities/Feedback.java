@@ -1,4 +1,4 @@
-package cat.itb.servlettest.model.entities;
+package cat.itb.springforum.model.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +15,10 @@ public class Feedback extends DatabaseItem
 {
     public enum Reaction { Happy, Angry, Sad, Neutral }
 
-    private String description;
+    private String userId, description;
     private Reaction reaction;
 
+    private String screenshotUrl;
     private Date date;
 
     private Specs specs;

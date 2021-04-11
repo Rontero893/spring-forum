@@ -1,4 +1,4 @@
-package cat.itb.servlettest.config;
+package cat.itb.springforum.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

@@ -1,5 +1,6 @@
-package cat.itb.servlettest.security;
+package cat.itb.springforum.security;
 
+import cat.itb.springforum.controllers.DataController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
