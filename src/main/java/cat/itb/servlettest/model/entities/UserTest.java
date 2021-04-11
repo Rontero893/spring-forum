@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ForumUser
+public class UserTest
 {
     public static final String[] lastNames = {"Lopez", "Rodriguez", "Vera", "Romero", "Gutierrez", "Nunyes"};
 
     private int id;
     private String name, lastName, password;
 
-    public ForumUser(String name)
+    public UserTest(String name)
     {
         id = (int) (Math.random() * 10 + 1);
         this.name = name;

@@ -1,6 +1,6 @@
 package cat.itb.servlettest.security;
 
-import cat.itb.servlettest.model.entities.ForumUser;
+import cat.itb.servlettest.model.entities.UserTest;
 import cat.itb.servlettest.model.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +22,7 @@ public class ElMeuUserDetailsService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
     {
-        ForumUser u = serveiUsuaris.consultaPerId(Integer.parseInt(s));
+        UserTest u = serveiUsuaris.consultaPerId(Integer.parseInt(s));
         User.UserBuilder builder;
         if (u != null)
         {
