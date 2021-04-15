@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class LoginController
 {
-    @Autowired
-    private UserForumService userForumService;
-
     @GetMapping("/login")
     public String login() { return "redirect::/login"; }
 
@@ -28,7 +25,7 @@ public class LoginController
     @PostMapping("/register/submit")
     public String resgisterUser(@ModelAttribute("user") UserForum user)
     {
-        userForumService.add(user);
+        UserForumService.add(user);
         return "list";
     }
 }

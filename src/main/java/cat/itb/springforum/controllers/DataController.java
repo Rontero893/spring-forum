@@ -3,7 +3,7 @@ package cat.itb.springforum.controllers;
 import cat.itb.springforum.model.entities.Feedback;
 import cat.itb.springforum.model.entities.UserForum;
 import cat.itb.springforum.model.services.FeedbackDataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cat.itb.springforum.model.services.UserForumService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class DataController
 {
-    @Autowired
-    private FeedbackDataService feedbackDataService;
+    private final FeedbackDataService feedbackDataService;
+
+    public DataController(FeedbackDataService feedbackDataService) {
+        this.feedbackDataService = feedbackDataService;
+    }
 
     @PostMapping("/feedback/user")
     public String setUser(@ModelAttribute("userForm") UserForum emp)
@@ -31,7 +34,6 @@ public class DataController
     @GetMapping("/feedback/new")
     public String prepareNewFeedback(Model m)
     {
-        //cal instanciar l'empleat, pq sino el CommandObject no existeix al formulari
         m.addAttribute("feedbackForm", new Feedback());
         return "new-feedback";
     }
@@ -39,7 +41,7 @@ public class DataController
     @PostMapping("/feedback/new/submit")
     public String addNewFeedbackSubmit(@ModelAttribute("feedbackForm") Feedback emp)
     {
-        feedbackDataService.addFeedback(emp);
+        feedbackDataService.addFeedback(emp, UserForumService.getUsers().get(0));
         return "redirect:/feedback/list";
     }
 

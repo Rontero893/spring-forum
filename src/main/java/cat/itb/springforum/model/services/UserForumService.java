@@ -13,30 +13,35 @@ import java.util.List;
 @Service
 public class UserForumService
 {
-    private final List<UserForum> users = new ArrayList<>();
+    private static final List<UserForum> users = new ArrayList<>();
 
-    public void add(final UserForum e)
+    public static void add(final UserForum e)
     {
         e.setPassword(new BCryptPasswordEncoder().encode(e.getPassword()));
         users.add(e);
     }
 
-    public List<UserForum> getUsers() { return users; }
+    public static void deleteFeedback(Feedback feedback)
+    {
+        users.forEach(user -> user.deleteFeedback(feedback));
+    }
 
-    public UserForum getUser(final String id)
+    public static List<UserForum> getUsers() { return users; }
+
+    public static UserForum getUser(final String id)
     {
         for (UserForum user : users) { if (user.getId().equals(id)) return user; }
         return null;
     }
 
-    public UserForum getUserByUsername(final String username)
+    public static UserForum getUserByUsername(final String username)
     {
         System.out.println(username);
         for (UserForum user : users) { if (user.getUsername().equals(username)) return user; }
         return null;
     }
 
-    public void deleteUser(final String id)
+    public static void deleteUser(final String id)
     {
         for (UserForum user : users)
         {
@@ -48,7 +53,7 @@ public class UserForumService
         }
     }
 
-    public void modifyUser(UserForum e)
+    public static void modifyUser(UserForum e)
     {
         String id = e.getId();
         for (int i = 0; i < users.size(); i++)
@@ -64,8 +69,8 @@ public class UserForumService
     @PostConstruct
     public void init()
     {
-        UserForum admin = new UserForum("ricardo.montserrat.7e3@itb.cat", "Admin", "123", UserForum.Role.ADMIN);
-        UserForum user = new UserForum("ricardo.montserrat.7e3@itb.cat", "User", "123", UserForum.Role.USER);
+        UserForum admin = new UserForum("ricardo.montserrat.7e3@itb.cat", "admin", "123", UserForum.ADMIN_ROLE);
+        UserForum user = new UserForum("javier.romero@itb.cat", "user", "123", UserForum.USER_ROLE);
 
         admin.addFeedback(new Feedback(admin.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
         user.addFeedback(new Feedback(user.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));

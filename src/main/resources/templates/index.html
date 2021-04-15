@@ -5,8 +5,17 @@
     <meta charset="UTF-8">
 </head>
 <body>
+<tbody>
 <button onclick="document.location.href='/feedback/new'" style="height: 25vh; width: 100%; font-size: 5vh">Add Feedback</button><br/>
 <button onclick="document.location.href='/feedback/list'" style="height: 25vh; width: 100%; font-size: 5vh">See Feedback</button><br/>
-<button type="submit" th:action="@{/logout}" method="post">Register</button>
+<button onclick="document.location.href='/login'" style="height: 25vh; width: 100%; font-size: 5vh">Login</button><br/>
+<button onclick="document.location.href='/register'" style="height: 25vh; width: 100%; font-size: 5vh">Register</button><br/>
+
+<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+    <input type="submit" value="Logout" />
+</form>
+<a href="javascript:document.logoutForm.submit()">Logout</a>
+
+</tbody>
 </body>
 </html>

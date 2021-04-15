@@ -12,12 +12,16 @@
     <!--si el id != 0 ja té valors, i envio per editar, modificar, substituir empleat -->
 
     <h1 th:text="${feedbackForm.id}">bla bla empleat</h1>
-    Description <input type="text" id="description" placeholder="Description" th:field="*{description}"><br/>
-    Reaction <input type="text" id="reaction" placeholder="Angry, Sad, Neutral, Happy" th:field="*{reaction}"><br/>
-    Screenshot Url <input type="text" id="screenshotUrl" placeholder="http//www.url.com" th:field="*{screenshotUrl}"><br/>
-    Screenshot Url <input type="date" id="date" placeholder="2000/01/31" th:field="*{date}"><br/>
-    <button type="submit">Enviar</button>
-    <button type="submit" th:action="@{/logout}" method="post">Register</button>
+    Description <input style="width: 100%;"type="text" id="description" placeholder="Description" th:field="*{description}"><br/>
+    Reaction <input style="width: 100%;" type="text" id="reaction" placeholder="Angry, Sad, Neutral, Happy (It's necessary to write it correctly)" th:field="*{reaction}"><br/>
+    Screenshot Url <input style="width: 100%;"t ype="text" id="screenshotUrl" placeholder="http//www.url.com" th:field="*{screenshotUrl}"><br/>
+    Screenshot Url <input style="width: 100%;" type="date" id="date" placeholder="2000/01/31" th:field="*{date}"><br/>
+    <button style="width: 100%;" type="submit">Enviar</button>
+    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+        <input style="width: 100%;" type="submit" value="Logout" />
+    </form>
+    <a href="javascript:document.logoutForm.submit()">Logout</a>
+
 </form>
 </body>
 </html>

@@ -20,7 +20,11 @@
         <input type="text" id="matchPassword" name="matchPassword">
     </div>
     <button type="submit" th:text="Register">Register</button>
-    <button type="submit" th:action="@{/logout}" method="post">Register</button>
+    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+    <input type="submit" value="Logout" />
+</form>
+    <a href="javascript:document.logoutForm.submit()">Logout</a>
+
 </form>
 </body>
 </html>

@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DataControllerREST
 {
-    @Autowired
-    private FeedbackDataService feedbackDataService;
+    private final FeedbackDataService feedbackDataService;
+
+    public DataControllerREST(FeedbackDataService feedbackDataService) {
+        this.feedbackDataService = feedbackDataService;
+    }
 
     @GetMapping("/feedback/get")
     public Feedback getJsonFeedback(@RequestParam("id") String id) { return feedbackDataService.getFeedback(id); }
