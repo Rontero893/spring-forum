@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -19,7 +17,16 @@ public class Feedback extends DatabaseItem
     private Reaction reaction;
 
     private String screenshotUrl;
-    private Date date;
+    private String date;
 
     private Specs specs;
+
+    public Feedback(String userId, String description, Reaction reaction, String screenshotUrl, String date)
+    {
+        this.userId = userId;
+        this.description = description;
+        this.reaction = reaction;
+        this.screenshotUrl = screenshotUrl;
+        this.date = date;
+    }
 }

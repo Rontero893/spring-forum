@@ -1,5 +1,6 @@
 package cat.itb.springforum.model.services;
 
+import cat.itb.springforum.model.entities.Feedback;
 import cat.itb.springforum.model.entities.UserForum;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,12 @@ public class UserForumService
     public static UserForum getUser(final String id)
     {
         for (UserForum user : users) { if (user.getId().equals(id)) return user; }
+        return null;
+    }
+
+    public static UserForum getUserByUsername(final String username)
+    {
+        for (UserForum user : users) { if (user.getUsername().equals(username)) return user; }
         return null;
     }
 
@@ -51,9 +58,12 @@ public class UserForumService
     @PostConstruct
     public void init()
     {
-        users.addAll(
-                Collections.singletonList(
-                        new UserForum("ricardo.montserrat.7e3@itb.cat", "Ricardo", "12345", UserForum.Role.ADMIN)
-                ));
+        UserForum ricardo = new UserForum("ricardo.montserrat.7e3@itb.cat", "Ricardo", "123", UserForum.Role.ADMIN);
+
+        ricardo.addFeedback(new Feedback(ricardo.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
+        ricardo.addFeedback(new Feedback(ricardo.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
+        ricardo.addFeedback(new Feedback(ricardo.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
+
+        users.addAll(Collections.singletonList(ricardo));
     }
 }

@@ -1,0 +1,22 @@
+<!-- plantilla afegir.html -->
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Afegir Empleat</title>
+</head>
+<body>
+<!--<form method="post" action="#" th:action="@{/empleats/new/submit}" th:object="${feedbackForm}">-->
+<form method="post" action="#" th:action="@{/feedback/new/submit}" th:object="${feedbackForm}">
+    <!-- si el id == 0 és la primera vegada que utilitzo el form, per tant new Empleat -->
+    <!--si el id != 0 ja té valors, i envio per editar, modificar, substituir empleat -->
+
+    <h1 th:text="${feedbackForm.id}">bla bla empleat</h1>
+    Description <input type="text" id="description" placeholder="Description" th:field="*{description}"><br/>
+    Reaction <input type="text" id="reaction" placeholder="Angry, Sad, Neutral, Happy" th:field="*{reaction}"><br/>
+    Screenshot Url <input type="text" id="screenshotUrl" placeholder="http//www.url.com" th:field="*{screenshotUrl}"><br/>
+    Screenshot Url <input type="date" id="date" placeholder="2000/01/31" th:field="*{date}"><br/>
+    <button type="submit">Enviar</button>
+</form>
+</body>
+</html>

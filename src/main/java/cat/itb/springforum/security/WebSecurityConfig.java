@@ -1,36 +1,34 @@
 package cat.itb.springforum.security;
 
-import cat.itb.springforum.controllers.DataController;
-import org.springframework.beans.factory.annotation.Autowired;
+import cat.itb.springforum.model.entities.UserForum;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
-public class ConfiguracioSeguretatWeb extends WebSecurityConfigurerAdapter
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
-    @Autowired
-    private ElMeuUserDetailsService userDetailsService;
+    private final ForumUserDetails userDetailsService;
+
+    public WebSecurityConfig(ForumUserDetails userDetailsService) { this.userDetailsService = userDetailsService; }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder());
-    }
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception { auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder()); }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                .antMatchers("/", "/inici", "/hola")
+                .antMatchers("/", "/login", "/register")
                 .permitAll()
 
-                .antMatchers("/secret").authenticated()
+                .antMatchers("/feedback/delete").hasRole(UserForum.Role.ADMIN.name())
 
-                .antMatchers("/topsecret").hasRole("espia")
+                .antMatchers("/feedback/new").authenticated()
 
                 .and()
                 .formLogin()

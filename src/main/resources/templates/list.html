@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Llistat</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Description</th>
+        <th>Reaction</th>
+        <th>Screenshot Url</th>
+        <th>Date</th>
+        <th>Actions</th>
+
+    </tr></br>
+    </thead>
+    <tbody>
+    <tr th:each="feed : ${feedbackList}">
+        <td th:text="${feed.id}">ASDGK246</td>
+        <td th:text="${feed.userId}">125KGE53</td>
+        <td th:text="${feed.description}">Very funny game</td>
+        <td th:text="${feed.reaction}">Angry</td>
+        <td th:text="${feed.screenshotUrl}">www.url.com</td>
+        <td th:text="${feed.date}">2000-20-01</td>
+        <td><a th:href="@{/feedback/delete/{id}(id=${feed.id})}">Delete</a> </td><br/>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

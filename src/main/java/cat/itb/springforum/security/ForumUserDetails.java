@@ -7,25 +7,22 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ElMeuUserDetailsService implements UserDetailsService
+public class ForumUserDetails implements UserDetailsService
 {
-    private final UserForumService userForumService;
-
-    public ElMeuUserDetailsService(UserForumService userForumService) { this.userForumService = userForumService; }
-
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
     {
-        UserForum u = userForumService.getUser(s);
+        UserForum u = UserForumService.getUser(s);
         User.UserBuilder builder;
         if (u != null)
         {
             builder = User.withUsername(s);
             builder.disabled(false);
-            builder.password(u.getPassword());
+            builder.password(new BCryptPasswordEncoder().encode(u.getPassword()));
             builder.authorities(new SimpleGrantedAuthority(u.getRole()));
         }
         else throw new UsernameNotFoundException("User not found!");

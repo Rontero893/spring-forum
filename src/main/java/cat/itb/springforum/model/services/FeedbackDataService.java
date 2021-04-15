@@ -5,6 +5,7 @@ import cat.itb.springforum.model.entities.UserForum;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
