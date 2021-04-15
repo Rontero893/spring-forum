@@ -12,8 +12,7 @@ import java.util.List;
 @Data
 public class UserForum extends DatabaseItem
 {
-    public enum Role
-    { ADMIN, USER }
+    public enum Role { ADMIN, USER }
 
     private String email, username, password;
     private Role role;
@@ -38,7 +37,7 @@ public class UserForum extends DatabaseItem
     {
         this.email = email;
         this.username = username;
-        this.password = password;;
+        this.password = new BCryptPasswordEncoder().encode(password);
         this.role = role;
     }
 }

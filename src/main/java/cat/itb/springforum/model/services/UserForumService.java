@@ -15,7 +15,11 @@ public class UserForumService
 {
     private final List<UserForum> users = new ArrayList<>();
 
-    public void add(final UserForum e) { users.add(e); }
+    public void add(final UserForum e)
+    {
+        e.setPassword(new BCryptPasswordEncoder().encode(e.getPassword()));
+        users.add(e);
+    }
 
     public List<UserForum> getUsers() { return users; }
 
@@ -60,10 +64,8 @@ public class UserForumService
     @PostConstruct
     public void init()
     {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        UserForum admin = new UserForum("ricardo.montserrat.7e3@itb.cat", "Admin", encoder.encode("123"), UserForum.Role.ADMIN);
-        UserForum user = new UserForum("ricardo.montserrat.7e3@itb.cat", "User", encoder.encode("123"), UserForum.Role.USER);
+        UserForum admin = new UserForum("ricardo.montserrat.7e3@itb.cat", "Admin", "123", UserForum.Role.ADMIN);
+        UserForum user = new UserForum("ricardo.montserrat.7e3@itb.cat", "User", "123", UserForum.Role.USER);
 
         admin.addFeedback(new Feedback(admin.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
         user.addFeedback(new Feedback(user.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
