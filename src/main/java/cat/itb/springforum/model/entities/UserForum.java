@@ -38,7 +38,7 @@ public class UserForum extends DatabaseItem
     {
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = password;;
         this.role = role;
     }
 }

@@ -3,6 +3,7 @@ package cat.itb.springforum.controllers;
 import cat.itb.springforum.model.entities.Feedback;
 import cat.itb.springforum.model.entities.UserForum;
 import cat.itb.springforum.model.services.FeedbackDataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class DataController
 {
-    private final FeedbackDataService feedbackDataService;
-
-    public DataController(FeedbackDataService feedbackDataService) {this.feedbackDataService = feedbackDataService;}
+    @Autowired
+    private FeedbackDataService feedbackDataService;
 
     @PostMapping("/feedback/user")
     public String setUser(@ModelAttribute("userForm") UserForum emp)

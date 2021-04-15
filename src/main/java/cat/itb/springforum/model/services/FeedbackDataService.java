@@ -3,9 +3,9 @@ package cat.itb.springforum.model.services;
 import cat.itb.springforum.model.entities.Feedback;
 import cat.itb.springforum.model.entities.UserForum;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +17,9 @@ public class FeedbackDataService
     private UserForum currentUser;
 
     private List<Feedback> feedbackList;
+
+    @Autowired
+    private UserForumService userForumService;
 
     public List<Feedback> getFeedbackList()
     {
@@ -41,12 +44,12 @@ public class FeedbackDataService
     {
         Feedback feedback = getFeedback(id);
         //TODO: check if this is a copy or original
-        Objects.requireNonNull(UserForumService.getUser(feedback.getUserId())).deleteFeedback(feedback);
+        Objects.requireNonNull(userForumService.getUser(feedback.getUserId())).deleteFeedback(feedback);
     }
 
     private void refreshFeedbackList()
     {
         feedbackList = new ArrayList<>();
-        for (UserForum user : UserForumService.getUsers()) feedbackList.addAll(user.getFeedbackHistory());
+        for (UserForum user : userForumService.getUsers()) feedbackList.addAll(user.getFeedbackHistory());
     }
 }

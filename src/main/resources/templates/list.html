@@ -28,6 +28,7 @@
         <td th:text="${feed.date}">2000-20-01</td>
         <td><a th:href="@{/feedback/delete/{id}(id=${feed.id})}">Delete</a> </td><br/>
     </tr>
+    <button type="submit" th:action="@{/logout}" method="post">Register</button>
     </tbody>
 </table>
 

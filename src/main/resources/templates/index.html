@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Pàgina inici per saludar</title>
     <meta charset="UTF-8">
@@ -7,5 +7,6 @@
 <body>
 <button onclick="document.location.href='/feedback/new'" style="height: 25vh; width: 100%; font-size: 5vh">Add Feedback</button><br/>
 <button onclick="document.location.href='/feedback/list'" style="height: 25vh; width: 100%; font-size: 5vh">See Feedback</button><br/>
+<button type="submit" th:action="@{/logout}" method="post">Register</button>
 </body>
 </html>
