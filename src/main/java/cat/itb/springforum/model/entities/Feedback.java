@@ -3,29 +3,35 @@ package cat.itb.springforum.model.entities;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
+import javax.persistence.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonAutoDetect
-public class Feedback extends DatabaseItem
+@Entity(name = "feedback")
+public class Feedback
 {
     public enum Reaction { Happy, Angry, Sad, Neutral }
 
-    private String userId, description;
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @ManyToOne
+    private UserForum userForum;
+
+    private String description;
     private Reaction reaction;
 
     private String screenshotUrl;
     private String date;
 
-    private Specs specs;
-
-    public Feedback(String userId, String description, Reaction reaction, String screenshotUrl, String date)
+    public Feedback(UserForum userForum, String description, Reaction reaction, String screenshotUrl, String date)
     {
-        this.userId = userId;
+        this.userForum = userForum;
         this.description = description;
         this.reaction = reaction;
         this.screenshotUrl = screenshotUrl;

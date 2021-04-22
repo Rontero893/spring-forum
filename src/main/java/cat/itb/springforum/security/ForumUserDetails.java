@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForumUserDetails implements UserDetailsService
 {
+    @Autowired
+    private UserForumService userForumService;
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
     {
-        UserForum u = UserForumService.getUserByUsername(s);
+        UserForum u = userForumService.getUserByUsername(s);
         User.UserBuilder builder;
         if (u != null)
         {

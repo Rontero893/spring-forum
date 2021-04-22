@@ -2,6 +2,8 @@ package cat.itb.springforum.model.services;
 
 import cat.itb.springforum.model.entities.Feedback;
 import cat.itb.springforum.model.entities.UserForum;
+import cat.itb.springforum.model.repositories.RepositoryUserForum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,69 +15,48 @@ import java.util.List;
 @Service
 public class UserForumService
 {
-    private static final List<UserForum> users = new ArrayList<>();
+    @Autowired
+    private RepositoryUserForum repositoryUserForum;
 
-    public static void add(final UserForum e)
+    public void add(final UserForum e)
     {
         e.setPassword(new BCryptPasswordEncoder().encode(e.getPassword()));
-        users.add(e);
+        repositoryUserForum.save(e);
     }
 
-    public static void deleteFeedback(Feedback feedback)
+    public List<UserForum> getUsers()
     {
-        users.forEach(user -> user.deleteFeedback(feedback));
+        return new ArrayList<>() {{ repositoryUserForum.findAll().iterator().forEachRemaining(this::add); }};
     }
 
-    public static List<UserForum> getUsers() { return users; }
-
-    public static UserForum getUser(final String id)
+    public UserForum getUser(final long id)
     {
-        for (UserForum user : users) { if (user.getId().equals(id)) return user; }
+        return repositoryUserForum.findById(id).orElse(null);
+    }
+
+    public UserForum getUserByUsername(final String username)
+    {
+        for (UserForum userForum : repositoryUserForum.findAll())
+        {
+            if (userForum.getUsername().equals(username)) return userForum;
+        }
         return null;
     }
 
-    public static UserForum getUserByUsername(final String username)
-    {
-        System.out.println(username);
-        for (UserForum user : users) { if (user.getUsername().equals(username)) return user; }
-        return null;
-    }
+    public void deleteUser(final long id) { repositoryUserForum.deleteById(id); }
 
-    public static void deleteUser(final String id)
-    {
-        for (UserForum user : users)
-        {
-            if (user.getId().equals(id))
-            {
-                users.remove(user);
-                return;
-            }
-        }
-    }
-
-    public static void modifyUser(UserForum e)
-    {
-        String id = e.getId();
-        for (int i = 0; i < users.size(); i++)
-        {
-            if (users.get(i).getId().equals(id))
-            {
-                users.set(i, e);
-                return;
-            }
-        }
-    }
+    public void modifyUser(UserForum e) { repositoryUserForum.save(e); }
 
     @PostConstruct
     public void init()
     {
-        UserForum admin = new UserForum("ricardo.montserrat.7e3@itb.cat", "admin", "123", UserForum.ADMIN_ROLE);
-        UserForum user = new UserForum("javier.romero@itb.cat", "user", "123", UserForum.USER_ROLE);
+        UserForum admin = new UserForum("ricardo.montserrat.7e3@itb.cat", "admin", "123", UserForum.SecurityRole.ADMIN);
+        UserForum user = new UserForum("javier.romero@itb.cat", "user", "123", UserForum.SecurityRole.USER);
 
-        admin.addFeedback(new Feedback(admin.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
-        user.addFeedback(new Feedback(user.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
-        user.addFeedback(new Feedback(user.getId(), "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
+        admin.addFeedback(new Feedback(admin, "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
+        user.addFeedback(new Feedback(user, "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
+        user.addFeedback(new Feedback(user, "Pretty good idea!", Feedback.Reaction.Happy, "http://wwww.youtube.com", "2005/01/21"));
 
-        users.addAll(Arrays.asList(admin, user));
+        repositoryUserForum.saveAll(Arrays.asList(admin, user));
     }
 }

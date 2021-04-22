@@ -4,38 +4,48 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserForum extends DatabaseItem
+@Entity(name = "users")
+public class UserForum
 {
-    public static final String ADMIN_ROLE = "Admin";
-    public static final String USER_ROLE = "User";
+    public enum SecurityRole { ADMIN, USER }
+
+    @Id
+    @GeneratedValue
+    private long id;
 
     private String email, username, password;
-    private String role;
+    private SecurityRole role;
 
-    private final List<Feedback> feedbackHistory = new ArrayList<>();
+    @OneToMany(mappedBy = "users")
+    private List<Feedback> feedbackHistory;
 
     public void addFeedback(Feedback feedback) { feedbackHistory.add(feedback); }
 
     public void deleteFeedback(Feedback feedback) { feedbackHistory.remove(feedback); }
+
+    public String getRole() { return role.name(); }
 
     public UserForum()
     {
         email = "noemail@gmail.com";
         username = "anom";
         password = new BCryptPasswordEncoder().encode("123");
-        role = USER_ROLE;
+        role = SecurityRole.USER;
     }
 
-    public UserForum(String email, String username, String password, String role)
+    public UserForum(String email, String username, String password, SecurityRole role)
     {
         this.email = email;
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);
-        this.role = role;
+        this.role = SecurityRole.ADMIN;
     }
 }
