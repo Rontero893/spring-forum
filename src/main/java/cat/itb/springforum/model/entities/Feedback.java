@@ -18,10 +18,11 @@ public class Feedback
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @ManyToOne
-    private UserForum userForum;
+    @JoinColumn(name = "user")
+    private UserForum user;
 
     private String description;
     private Reaction reaction;
@@ -31,7 +32,7 @@ public class Feedback
 
     public Feedback(UserForum userForum, String description, Reaction reaction, String screenshotUrl, String date)
     {
-        this.userForum = userForum;
+        this.user = userForum;
         this.description = description;
         this.reaction = reaction;
         this.screenshotUrl = screenshotUrl;
