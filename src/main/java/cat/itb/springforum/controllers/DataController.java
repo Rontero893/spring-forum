@@ -43,7 +43,7 @@ public class DataController
     @PostMapping("/feedback/new/submit")
     public String addNewFeedbackSubmit(@ModelAttribute("feedbackForm") Feedback emp)
     {
-        emp.setUserForum(repositoryUserForum.findById(loggedUserID).orElse(new UserForum()));
+        emp.setUser(repositoryUserForum.findById(loggedUserID).orElse(new UserForum()));
         feedbackDataService.addFeedback(emp);
         return "redirect:/feedback/list";
     }

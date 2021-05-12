@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity(name = "users")
+@Entity(name = "user")
 public class UserForum
 {
     public enum SecurityRole { ADMIN, USER }
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private String email, username, password;
     private SecurityRole role;
 
-    @OneToMany(mappedBy = "users")
-    private List<Feedback> feedbackHistory;
+    @OneToMany(mappedBy = "user")
+    private List<Feedback> feedbackHistory = new ArrayList<>();
 
     public void addFeedback(Feedback feedback) { feedbackHistory.add(feedback); }
 
